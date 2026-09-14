@@ -310,7 +310,14 @@
     e.preventDefault();
     var file = $("photo-file").files[0];
     var caption = $("photo-caption").value.trim();
+    var consentConfirmed = $("photo-consent").checked;
     if (!file) return;
+
+    if (!consentConfirmed) {
+      showStatus($("upload-status"),
+        "You must confirm documented guardian consent before this photo can go live.", "error");
+      return;
+    }
 
     var uploadBtn = $("upload-btn");
     var progressContainer = $("upload-progress-container");
@@ -344,6 +351,7 @@
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             filename: filename,
             uploadedBy: user ? user.uid : null,
+            consentConfirmed: true,
           });
         }).then(function () {
           uploadBtn.disabled = false;

@@ -9,6 +9,7 @@ node --check sw.js
 node --check assets/js/main.js
 node --check assets/js/config.js
 node --check assets/js/keeper-game.js
+node --check assets/js/coach-portal.js
 
 python3 - <<'EOF'
 import glob, re, os, sys, json, html.parser
