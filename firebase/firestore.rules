@@ -35,9 +35,10 @@ service cloud.firestore {
     match /photos/{photoId} {
       allow read: if true;
       allow create: if isActiveCoach()
-        && request.resource.data.keys().hasAll(['url', 'caption', 'createdAt'])
+        && request.resource.data.keys().hasAll(['url', 'caption', 'createdAt', 'consentConfirmed'])
         && request.resource.data.url is string
-        && request.resource.data.caption is string;
+        && request.resource.data.caption is string
+        && request.resource.data.consentConfirmed == true;
       allow update, delete: if isAdmin();
     }
 

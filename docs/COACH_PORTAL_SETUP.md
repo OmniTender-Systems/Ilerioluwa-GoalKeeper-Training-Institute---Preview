@@ -43,7 +43,7 @@ The first admin cannot self-invite. Create them manually:
 |-----|--------|
 | Head coach (admin) | Sign in → **Team access** → invite email + role |
 | New coach | Open portal → **Activate account** → set password |
-| Any active coach | **Upload photo** → appears in gallery via Firestore |
+| Any active coach | **Upload photo** → tick the guardian-consent confirmation → appears in gallery via Firestore |
 
 ## Roles
 
@@ -54,7 +54,10 @@ The first admin cannot self-invite. Create them manually:
 
 ## Security rules
 
-- `firebase/firestore.rules` — gallery writes require active coach; invites admin-only.
+- `firebase/firestore.rules` — gallery writes require active coach; invites admin-only;
+  a photo document is rejected unless `consentConfirmed == true` (matches the required
+  checkbox on the upload form — see `CONSENT_README.md`). This is enforced server-side,
+  not just in the UI.
 - `firebase/storage.rules` — image uploads only, max 8 MB.
 
 After changing rules, redeploy with `firebase deploy --only firestore:rules,storage`.
